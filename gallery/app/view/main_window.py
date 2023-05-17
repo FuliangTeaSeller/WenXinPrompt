@@ -24,6 +24,9 @@ from .status_info_interface import StatusInfoInterface
 from .setting_interface import SettingInterface, cfg
 from .text_interface import TextInterface
 from .view_interface import ViewInterface
+
+from .my_interface import myInterface
+
 from ..common.config import SUPPORT_URL
 from ..components.avatar_widget import AvatarWidget
 from ..common.icon import Icon
@@ -89,6 +92,8 @@ class MainWindow(FramelessWindow):
         self.settingInterface = SettingInterface(self)
         self.textInterface = TextInterface(self)
         self.viewInterface = ViewInterface(self)
+        
+        self.myInterface = myInterface(self)
 
         # initialize layout
         self.initLayout()
@@ -143,6 +148,9 @@ class MainWindow(FramelessWindow):
             self.textInterface, 'textInterface', Icon.TEXT, self.tr('Text'))
         self.addSubInterface(
             self.viewInterface, 'viewInterface', Icon.GRID, self.tr('View'))
+        
+        self.addSubInterface(
+            self.myInterface, 'myInterface', Icon.GRID, self.tr('my'))
 
         # add custom widget to bottom
         # self.navigationInterface.addWidget(
