@@ -145,12 +145,12 @@ class MainWindow(FramelessWindow):
             self.viewInterface, 'viewInterface', Icon.GRID, self.tr('View'))
 
         # add custom widget to bottom
-        self.navigationInterface.addWidget(
-            routeKey='avatar',
-            widget=AvatarWidget(':/gallery/images/shoko.png'),
-            onClick=self.showMessageBox,
-            position=NavigationItemPosition.BOTTOM
-        )
+        # self.navigationInterface.addWidget(
+        #     routeKey='avatar',
+        #     widget=AvatarWidget(':/gallery/images/shoko.png'),
+        #     onClick=self.showMessageBox,
+        #     position=NavigationItemPosition.BOTTOM
+        # )
         self.addSubInterface(
             self.settingInterface, 'settingInterface', FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
 
