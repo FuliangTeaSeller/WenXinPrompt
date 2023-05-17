@@ -1,13 +1,13 @@
 # coding:utf-8
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup
+from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup,QLabel
 
 from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme,
                             Theme, applyThemeColor, SmoothScrollArea, SearchLineEdit)
 
 from .gallery_interface import GalleryInterface
 from ..common.translator import Translator
-
+from ..common.trie import Trie
 class LineEdit(SearchLineEdit):
     """ Search line edit """
 
@@ -25,3 +25,6 @@ class myInterface(GalleryInterface):
             subtitle='114514',
             parent=parent
         )
+        self.trie = Trie()
+        self.iconLibraryLabel = QLabel(self.tr('Prompt库'), self)
+        self.searchLineEdit = LineEdit(self)

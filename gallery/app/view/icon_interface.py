@@ -18,7 +18,7 @@ class LineEdit(SearchLineEdit):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setPlaceholderText(self.tr('Search icons'))
+        self.setPlaceholderText(self.tr('Search prompts'))
         self.setFixedWidth(304)
         self.textChanged.connect(self.search)
 
@@ -120,7 +120,7 @@ class IconCardView(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.trie = Trie()
-        self.iconLibraryLabel = QLabel(self.tr('Fluent Icons Library'), self)
+        self.iconLibraryLabel = QLabel(self.tr('在本地prompt库中搜索'), self)
         self.searchLineEdit = LineEdit(self)
 
         self.view = QFrame(self)
@@ -226,7 +226,7 @@ class IconInterface(GalleryInterface):
         t = Translator()
         super().__init__(
             title=t.icons,
-            subtitle="qfluentwidgets.common.icon",
+            subtitle="",
             parent=parent
         )
 

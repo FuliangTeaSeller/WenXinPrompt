@@ -1,0 +1,20 @@
+{
+    "Material": {
+        "AcrylicBlurRadius": 15
+    },
+    "Update": {
+        "CheckUpdateAtStartUp": true
+    },
+    "Folders": {
+        "Download": "C:/Users/ZhangXuanye/source/repos/WenXinPrompt/app/download",
+        "LocalMusic": []
+    },
+    "MainWindow": {
+        "DpiScale": "Auto",
+        "Language": "Auto"
+    },
+    "QFluentWidgets": {
+        "ThemeColor": "#ff009faa",
+        "ThemeMode": "Dark"
+    }
+}

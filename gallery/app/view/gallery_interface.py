@@ -29,7 +29,6 @@ class SeparatorWidget(QWidget):
         x = self.width() // 2
         painter.drawLine(x, 0, x, self.height())
 
-
 class ToolBar(QWidget):
     """ Tool bar """
 
@@ -38,16 +37,16 @@ class ToolBar(QWidget):
         self.titleLabel = QLabel(title, self)
         self.subtitleLabel = QLabel(subtitle, self)
 
-        self.documentButton = PushButton(
-            self.tr('Documentation'), self, FluentIcon.DOCUMENT)
-        self.sourceButton = PushButton(self.tr('Source'), self, FluentIcon.GITHUB)
-        self.themeButton = ToolButton(FluentIcon.CONSTRACT, self)
-        self.separator = SeparatorWidget(self)
-        self.supportButton = ToolButton(FluentIcon.HEART, self)
-        self.feedbackButton = ToolButton(FluentIcon.FEEDBACK, self)
+        # self.documentButton = PushButton(
+        #     self.tr('Documentation'), self, FluentIcon.DOCUMENT)
+        # self.sourceButton = PushButton(self.tr('Source'), self, FluentIcon.GITHUB)
+        # self.themeButton = ToolButton(FluentIcon.CONSTRACT, self)
+        # self.separator = SeparatorWidget(self)
+        # self.supportButton = ToolButton(FluentIcon.HEART, self)
+        # self.feedbackButton = ToolButton(FluentIcon.FEEDBACK, self)
 
         self.vBoxLayout = QVBoxLayout(self)
-        self.buttonLayout = QHBoxLayout()
+        # self.buttonLayout = QHBoxLayout()
 
         self.__initWidget()
 
@@ -59,43 +58,43 @@ class ToolBar(QWidget):
         self.vBoxLayout.addSpacing(4)
         self.vBoxLayout.addWidget(self.subtitleLabel)
         self.vBoxLayout.addSpacing(4)
-        self.vBoxLayout.addLayout(self.buttonLayout, 1)
+        # self.vBoxLayout.addLayout(self.buttonLayout, 1)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 
-        self.buttonLayout.setSpacing(4)
-        self.buttonLayout.setContentsMargins(0, 0, 0, 0)
-        self.buttonLayout.addWidget(self.documentButton, 0, Qt.AlignLeft)
-        self.buttonLayout.addWidget(self.sourceButton, 0, Qt.AlignLeft)
-        self.buttonLayout.addStretch(1)
-        self.buttonLayout.addWidget(self.themeButton, 0, Qt.AlignRight)
-        self.buttonLayout.addWidget(self.separator, 0, Qt.AlignRight)
-        self.buttonLayout.addWidget(self.supportButton, 0, Qt.AlignRight)
-        self.buttonLayout.addWidget(self.feedbackButton, 0, Qt.AlignRight)
-        self.buttonLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+        # self.buttonLayout.setSpacing(4)
+        # self.buttonLayout.setContentsMargins(0, 0, 0, 0)
+        # self.buttonLayout.addWidget(self.documentButton, 0, Qt.AlignLeft)
+        # self.buttonLayout.addWidget(self.sourceButton, 0, Qt.AlignLeft)
+        # self.buttonLayout.addStretch(1)
+        # self.buttonLayout.addWidget(self.themeButton, 0, Qt.AlignRight)
+        # self.buttonLayout.addWidget(self.separator, 0, Qt.AlignRight)
+        # self.buttonLayout.addWidget(self.supportButton, 0, Qt.AlignRight)
+        # self.buttonLayout.addWidget(self.feedbackButton, 0, Qt.AlignRight)
+        # self.buttonLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
 
-        self.themeButton.installEventFilter(ToolTipFilter(self.themeButton))
-        self.supportButton.installEventFilter(ToolTipFilter(self.supportButton))
-        self.feedbackButton.installEventFilter(
-            ToolTipFilter(self.feedbackButton))
-        self.themeButton.setToolTip(self.tr('Toggle theme'))
-        self.supportButton.setToolTip(self.tr('Support me'))
-        self.feedbackButton.setToolTip(self.tr('Send feedback'))
+        # self.themeButton.installEventFilter(ToolTipFilter(self.themeButton))
+        # self.supportButton.installEventFilter(ToolTipFilter(self.supportButton))
+        # self.feedbackButton.installEventFilter(
+        #     ToolTipFilter(self.feedbackButton))
+        # self.themeButton.setToolTip(self.tr('Toggle theme'))
+        # self.supportButton.setToolTip(self.tr('Support me'))
+        # self.feedbackButton.setToolTip(self.tr('Send feedback'))
 
         self.titleLabel.setObjectName('titleLabel')
         self.subtitleLabel.setObjectName('subtitleLabel')
 
-        self.themeButton.clicked.connect(self.toggleTheme)
-        self.supportButton.clicked.connect(signalBus.supportSignal)
-        self.documentButton.clicked.connect(
-            lambda: QDesktopServices.openUrl(QUrl(HELP_URL)))
-        self.sourceButton.clicked.connect(
-            lambda: QDesktopServices.openUrl(QUrl(EXAMPLE_URL)))
-        self.feedbackButton.clicked.connect(
-            lambda: QDesktopServices.openUrl(QUrl(FEEDBACK_URL)))
+        # self.themeButton.clicked.connect(self.toggleTheme)
+        # self.supportButton.clicked.connect(signalBus.supportSignal)
+        # self.documentButton.clicked.connect(
+        #     lambda: QDesktopServices.openUrl(QUrl(HELP_URL)))
+        # self.sourceButton.clicked.connect(
+        #     lambda: QDesktopServices.openUrl(QUrl(EXAMPLE_URL)))
+        # self.feedbackButton.clicked.connect(
+        #     lambda: QDesktopServices.openUrl(QUrl(FEEDBACK_URL)))
 
-    def toggleTheme(self):
-        theme = Theme.LIGHT if isDarkTheme() else Theme.DARK
-        cfg.set(cfg.themeMode, theme)
+    # def toggleTheme(self):
+    #     theme = Theme.LIGHT if isDarkTheme() else Theme.DARK
+    #     cfg.set(cfg.themeMode, theme)
 
 
 class ExampleCard(QWidget):
