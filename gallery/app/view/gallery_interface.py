@@ -51,13 +51,14 @@ class ToolBar(QWidget):
         self.__initWidget()
 
     def __initWidget(self):
-        self.setFixedHeight(138)
+        # self.setFixedHeight(138)
+        self.setFixedHeight(85)
         self.vBoxLayout.setSpacing(0)
         self.vBoxLayout.setContentsMargins(36, 22, 36, 12)
         self.vBoxLayout.addWidget(self.titleLabel)
-        self.vBoxLayout.addSpacing(4)
-        self.vBoxLayout.addWidget(self.subtitleLabel)
-        self.vBoxLayout.addSpacing(4)
+        # self.vBoxLayout.addSpacing(4)
+        # self.vBoxLayout.addWidget(self.subtitleLabel)
+        # self.vBoxLayout.addSpacing(4)
         # self.vBoxLayout.addLayout(self.buttonLayout, 1)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 

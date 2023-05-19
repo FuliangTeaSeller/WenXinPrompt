@@ -81,17 +81,17 @@ class MainWindow(FramelessWindow):
         # create sub interface
         self.homeInterface = HomeInterface(self)
         self.iconInterface = IconInterface(self)
-        self.basicInputInterface = BasicInputInterface(self)
-        self.dateTimeInterface = DateTimeInterface(self)
-        self.dialogInterface = DialogInterface(self)
-        self.layoutInterface = LayoutInterface(self)
-        self.menuInterface = MenuInterface(self)
-        self.materialInterface = MaterialInterface(self)
-        self.scrollInterface = ScrollInterface(self)
-        self.statusInfoInterface = StatusInfoInterface(self)
+        # self.basicInputInterface = BasicInputInterface(self)
+        # self.dateTimeInterface = DateTimeInterface(self)
+        # self.dialogInterface = DialogInterface(self)
+        # self.layoutInterface = LayoutInterface(self)
+        # self.menuInterface = MenuInterface(self)
+        # self.materialInterface = MaterialInterface(self)
+        # self.scrollInterface = ScrollInterface(self)
+        # self.statusInfoInterface = StatusInfoInterface(self)
         self.settingInterface = SettingInterface(self)
-        self.textInterface = TextInterface(self)
-        self.viewInterface = ViewInterface(self)
+        # self.textInterface = TextInterface(self)
+        # self.viewInterface = ViewInterface(self)
         
         self.myInterface = myInterface(self)
 
@@ -128,26 +128,26 @@ class MainWindow(FramelessWindow):
             self.iconInterface, 'iconInterface', Icon.EMOJI_TAB_SYMBOLS, self.tr('Icons'), NavigationItemPosition.TOP)
         self.navigationInterface.addSeparator()
 
-        self.addSubInterface(
-            self.basicInputInterface, 'basicInputInterface', FIF.CHECKBOX, self.tr('Basic input'))
-        self.addSubInterface(
-            self.dateTimeInterface, 'dateTimeInterface', FIF.DATE_TIME, self.tr('Date & time'))
-        self.addSubInterface(
-            self.dialogInterface, 'dialogInterface', FIF.MESSAGE, self.tr('Dialogs'))
-        self.addSubInterface(
-            self.layoutInterface, 'layoutInterface', FIF.LAYOUT, self.tr('Layout'))
-        self.addSubInterface(
-            self.materialInterface, 'materialInterface', FIF.PALETTE, self.tr('Material'))
-        self.addSubInterface(
-            self.menuInterface, 'menuInterface', Icon.MENU, self.tr('Menus'))
-        self.addSubInterface(
-            self.scrollInterface, 'scrollInterface', FIF.SCROLL, self.tr('Scrolling'))
-        self.addSubInterface(
-            self.statusInfoInterface, 'statusInfoInterface', FIF.CHAT, self.tr('Status & info'))
-        self.addSubInterface(
-            self.textInterface, 'textInterface', Icon.TEXT, self.tr('Text'))
-        self.addSubInterface(
-            self.viewInterface, 'viewInterface', Icon.GRID, self.tr('View'))
+        # self.addSubInterface(
+        #     self.basicInputInterface, 'basicInputInterface', FIF.CHECKBOX, self.tr('Basic input'))
+        # self.addSubInterface(
+        #     self.dateTimeInterface, 'dateTimeInterface', FIF.DATE_TIME, self.tr('Date & time'))
+        # self.addSubInterface(
+        #     self.dialogInterface, 'dialogInterface', FIF.MESSAGE, self.tr('Dialogs'))
+        # self.addSubInterface(
+        #     self.layoutInterface, 'layoutInterface', FIF.LAYOUT, self.tr('Layout'))
+        # self.addSubInterface(
+        #     self.materialInterface, 'materialInterface', FIF.PALETTE, self.tr('Material'))
+        # self.addSubInterface(
+        #     self.menuInterface, 'menuInterface', Icon.MENU, self.tr('Menus'))
+        # self.addSubInterface(
+        #     self.scrollInterface, 'scrollInterface', FIF.SCROLL, self.tr('Scrolling'))
+        # self.addSubInterface(
+        #     self.statusInfoInterface, 'statusInfoInterface', FIF.CHAT, self.tr('Status & info'))
+        # self.addSubInterface(
+        #     self.textInterface, 'textInterface', Icon.TEXT, self.tr('Text'))
+        # self.addSubInterface(
+        #     self.viewInterface, 'viewInterface', Icon.GRID, self.tr('View'))
         
         self.addSubInterface(
             self.myInterface, 'myInterface', Icon.GRID, self.tr('my'))

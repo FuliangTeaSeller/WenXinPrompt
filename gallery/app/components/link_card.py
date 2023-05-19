@@ -5,18 +5,22 @@ from PyQt5.QtWidgets import QFrame, QLabel, QVBoxLayout, QWidget, QHBoxLayout
 
 from qfluentwidgets import IconWidget, FluentIcon, TextWrap, SingleDirectionScrollArea
 from ..common.style_sheet import StyleSheet
-
+from ..common.signal_bus import signalBus
 
 class LinkCard(QFrame):
 
-    def __init__(self, icon, title, content, url, parent=None):
+    def __init__(self, icon, title, content, url, parent=None,routeKey=None):
         super().__init__(parent=parent)
-        self.url = QUrl(url)
+        self.flag=True
+        if (url == None or url == ''):
+            self.flag=False        
+        self.url = QUrl(url) 
         self.setFixedSize(198, 220)
         self.iconWidget = IconWidget(icon, self)
         self.titleLabel = QLabel(title, self)
         self.contentLabel = QLabel(TextWrap.wrap(content, 28, False)[0], self)
         self.urlWidget = IconWidget(FluentIcon.LINK, self)
+        self.routekey = routeKey
 
         self.__initWidget()
 
@@ -42,7 +46,11 @@ class LinkCard(QFrame):
 
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
-        QDesktopServices.openUrl(self.url)
+        if (self.flag==False):
+            signalBus.switchToSampleCard.emit(self.routekey, 0)
+            # QDesktopServices.openUrl(self.url)
+        else:
+            QDesktopServices.openUrl(self.url)
 
 
 class LinkCardView(SingleDirectionScrollArea):
@@ -65,7 +73,7 @@ class LinkCardView(SingleDirectionScrollArea):
         self.view.setObjectName('view')
         StyleSheet.LINK_CARD.apply(self)
 
-    def addCard(self, icon, title, content, url):
+    def addCard(self, icon, title, content, url,routeKey=None):
         """ add link card """
-        card = LinkCard(icon, title, content, url, self.view)
+        card = LinkCard(icon, title, content, url, self.view,routeKey)
         self.hBoxLayout.addWidget(card, 0, Qt.AlignLeft)

@@ -34,7 +34,7 @@ class BannerWidget(QWidget):
             ':/gallery/images/logo.png',
             self.tr('快速开始'),
             self.tr('立即进入prompt创作'),
-            HELP_URL
+            url=None,routeKey='iconInterface'
         )
 
         self.linkCardView.addCard(
@@ -45,20 +45,20 @@ class BannerWidget(QWidget):
             REPO_URL
         )
 
-        # self.linkCardView.addCard(
-        #     FluentIcon.CODE,
-        #     self.tr('Code samples'),
-        #     self.tr(
-        #         'Find samples that demonstrate specific tasks, features and APIs.'),
-        #     EXAMPLE_URL
-        # )
+        self.linkCardView.addCard(
+            FluentIcon.CODE,
+            self.tr('Code samples'),
+            self.tr(
+                'Find samples that demonstrate specific tasks, features and APIs.'),
+            EXAMPLE_URL
+        )
 
-        # self.linkCardView.addCard(
-        #     FluentIcon.FEEDBACK,
-        #     self.tr('Send feedback'),
-        #     self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
-        #     FEEDBACK_URL
-        # )
+        self.linkCardView.addCard(
+            FluentIcon.FEEDBACK,
+            self.tr('Send feedback'),
+            self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
+            FEEDBACK_URL
+        )
 
     def paintEvent(self, e):
         super().paintEvent(e)
