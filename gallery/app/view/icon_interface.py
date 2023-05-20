@@ -1,6 +1,7 @@
 # coding:utf-8
 from typing import List
 
+from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout
 from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme,
@@ -51,8 +52,16 @@ class PromptCard(QFrame):
 
         maintext = self.mainNameLabel.fontMetrics().elidedText(prompt["title"], Qt.ElideLeft, 78)
         subtext = self.mainNameLabel.fontMetrics().elidedText(prompt["explanation"], Qt.ElideLeft, 150)#对一个过长的字符串进行裁剪，以便它能在给定的宽度内显示。
+        font = QFont()
+        font.setFamily('Arial')
+        font.setPointSize(14)
+        font.setBold(True)
+        self.mainNameLabel.setStyleSheet('color: grey;')
         self.mainNameLabel.setText(maintext)
+        self.mainNameLabel.setFont(font)
         # self.subNameLabel.setText(subtext)
+        # self.mainNameLabel.setStyleSheet('font-family: Arial; font-weight: bold;')
+        
 
     def mouseReleaseEvent(self, e):
         if self.isSelected:
@@ -67,10 +76,12 @@ class PromptCard(QFrame):
         self.isSelected = isSelected
 
         if not isSelected:
-            self.iconWidget.setIcon(self.icon)
+            # self.iconWidget.setIcon(self.icon)
+            self.mainNameLabel.setStyleSheet('color: grey;')
         else:
-            icon = self.icon.icon(Theme.LIGHT if isDarkTheme() else Theme.DARK)
-            self.iconWidget.setIcon(icon)
+            # icon = self.icon.icon(Theme.LIGHT if isDarkTheme() else Theme.DARK)
+            self.mainNameLabel.setStyleSheet('color: rgb(0, 159, 170);')
+            # self.iconWidget.setIcon(icon)
 
         self.setProperty('isSelected', isSelected)
         self.setStyle(QApplication.style())
