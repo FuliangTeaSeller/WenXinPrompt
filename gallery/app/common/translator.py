@@ -18,4 +18,4 @@ class Translator(QObject):
         self.dateTime = self.tr('Date & time')
         self.basicInput = self.tr('Basic input')
         self.statusInfo = self.tr('Status & info')
-        self.my = self.tr('my')
+        self.my = self.tr('创建prompt')

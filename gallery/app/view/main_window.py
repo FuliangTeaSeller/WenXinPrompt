@@ -25,7 +25,7 @@ from .setting_interface import SettingInterface, cfg
 from .text_interface import TextInterface
 from .view_interface import ViewInterface
 
-from .my_interface import myInterface
+from .my_interface import editPromptInterface
 
 from ..common.config import SUPPORT_URL
 from ..components.avatar_widget import AvatarWidget
@@ -93,7 +93,7 @@ class MainWindow(FramelessWindow):
         # self.textInterface = TextInterface(self)
         # self.viewInterface = ViewInterface(self)
         
-        self.myInterface = myInterface(self)
+        self.myInterface = editPromptInterface(self)
 
         # initialize layout
         self.initLayout()
