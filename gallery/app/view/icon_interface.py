@@ -44,10 +44,10 @@ class PromptCard(QFrame):
         self.vBoxLayout.setContentsMargins(8, 28, 8, 0)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
         # self.iconWidget.setFixedSize(28, 28)
-        self.iconWidget.setFixedSize(0, 0)
+        self.iconWidget.setFixedSize(28, 28)
         self.vBoxLayout.addWidget(self.iconWidget, 0, Qt.AlignLeft)
         self.vBoxLayout.addSpacing(14)
-        # self.vBoxLayout.addWidget(self.nameLabel, 0, Qt.AlignHCenter)
+        self.vBoxLayout.addWidget(self.mainNameLabel, 0, Qt.AlignHCenter)
 
         maintext = self.mainNameLabel.fontMetrics().elidedText(prompt["title"], Qt.ElideLeft, 78)
         subtext = self.mainNameLabel.fontMetrics().elidedText(prompt["explanation"], Qt.ElideLeft, 150)#对一个过长的字符串进行裁剪，以便它能在给定的宽度内显示。
@@ -106,7 +106,7 @@ class IconInfoPanel(QFrame):
         self.vBoxLayout.addSpacing(5)
         self.vBoxLayout.addWidget(self.enumNameLabel)
 
-        self.iconWidget.setFixedSize(48, 48)
+        self.iconWidget.setFixedSize(0, 0)
         self.setFixedWidth(216)
 
         self.nameLabel.setObjectName('nameLabel')
@@ -175,7 +175,7 @@ class IconCardView(QWidget):
         self.searchLineEdit.searchSignal.connect(self.search)
 
         # 打开并读取JSON文件
-        with open('./app/resource/prompts.json', 'r') as f:
+        with open('./gallery/app/resource/prompts.json', 'r') as f:
             data = json.load(f)
 
         # 获取prompts列表
@@ -219,7 +219,7 @@ class IconCardView(QWidget):
 
         self.currentIndex = index
         self.cards[index].setSelected(True)
-        self.infoPanel.setIcon(icon,prompt=self.myExtraInfos[index])
+        self.infoPanel.setIcon(icon,self.myExtraInfos[index])
         
     def __setQss(self):
         self.view.setObjectName('iconView')
@@ -243,18 +243,33 @@ class IconCardView(QWidget):
     #         if isVisible:
     #             self.flowLayout.addWidget(card)
 
+    # def search(self, keyWord: str):
+    #     """ search icons """
+    #     items = self.trie.items(keyWord.lower())
+    #     print(items)
+    #     indexes = {i[1] for i in items}
+    #     self.flowLayout.removeAllWidgets()
+
+    #     for i, card in enumerate(self.cards):
+    #         isVisible = i in indexes
+    #         card.setVisible(isVisible)
+    #         if isVisible:
+    #             self.flowLayout.addWidget(card)
+                
     def search(self, keyWord: str):
         """ search icons """
-        items = self.trie.items(keyWord.lower())
-        indexes = {i[1] for i in items}
-        self.flowLayout.removeAllWidgets()
+        keyWord = keyWord.lower()  # 将搜索词转为小写
 
-        for i, card in enumerate(self.cards):
-            isVisible = i in indexes
+        self.flowLayout.removeAllWidgets()  # 移除FlowLayout中的所有部件
+
+        for card in self.cards:  
+            # 假设card对象有一个name属性代表图标的名字，如果没有，应该替换为合适的属性
+            isVisible = keyWord in card.prompt['title'].lower() 
             card.setVisible(isVisible)
             if isVisible:
                 self.flowLayout.addWidget(card)
 
+                
     def showAllIcons(self):
         self.flowLayout.removeAllWidgets()
         for card in self.cards:

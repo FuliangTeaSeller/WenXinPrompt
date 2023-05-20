@@ -1,7 +1,7 @@
 {
     "prompts": [
         {
-            "title": "Prompt 1",
+            "title": "Prompt1",
             "explanation": "Explanation for prompt 1",
             "exactinfo": "Exact info for prompt 1",
             "icon": "Add"
