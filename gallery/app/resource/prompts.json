@@ -1,0 +1,34 @@
+{
+    "prompts": [
+        {
+            "title": "Prompt 1",
+            "explanation": "Explanation for prompt 1",
+            "exactinfo": "Exact info for prompt 1",
+            "icon": "Add"
+        },
+        {
+            "title": "Prompt 2",
+            "explanation": "Explanation for prompt 2",
+            "exactinfo": "Exact info for prompt 2",
+            "icon": "Cut"
+        },
+        {
+            "title": "Prompt 3",
+            "explanation": "Explanation for prompt 3",
+            "exactinfo": "Exact info for prompt 3",
+            "icon": "Pin"
+        },
+        {
+            "title": "Prompt 4",
+            "explanation": "Explanation for prompt 4",
+            "exactinfo": "Exact info for prompt 4",
+            "icon": "Tag"
+        },
+        {
+            "title": "Prompt 5",
+            "explanation": "Explanation for prompt 5",
+            "exactinfo": "Exact info for prompt 5",
+            "icon": "Chat"
+        }
+    ]
+}

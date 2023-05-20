@@ -11,7 +11,7 @@ from ..common.translator import Translator
 from ..common.config import cfg
 from ..common.style_sheet import StyleSheet
 from ..common.trie import Trie
-
+import json
 
 class LineEdit(SearchLineEdit):
     """ Search line edit """
@@ -23,33 +23,36 @@ class LineEdit(SearchLineEdit):
         self.textChanged.connect(self.search)
 
 
-class IconCard(QFrame):
+class PromptCard(QFrame):
     """ Icon card """
 
     clicked = pyqtSignal(FluentIcon)
 
-    def __init__(self, icon: FluentIcon, parent=None):
+    def __init__(self, icon: FluentIcon, parent=None,prompt=None):
         super().__init__(parent=parent)
         self.icon = icon
         self.isSelected = False
 
+        self.prompt = prompt
         self.iconWidget = IconWidget(icon, self)
-        self.nameLabel = QLabel(self)
+        self.mainNameLabel = QLabel(self)
+        self.subNameLabel = QLabel(self)
         self.vBoxLayout = QVBoxLayout(self)
-
         # self.setFixedSize(96, 96)
         self.setFixedSize(192, 96)
         self.vBoxLayout.setSpacing(0)
         self.vBoxLayout.setContentsMargins(8, 28, 8, 0)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
         # self.iconWidget.setFixedSize(28, 28)
-        self.iconWidget.setFixedSize(14, 14)
+        self.iconWidget.setFixedSize(0, 0)
         self.vBoxLayout.addWidget(self.iconWidget, 0, Qt.AlignLeft)
         self.vBoxLayout.addSpacing(14)
-        self.vBoxLayout.addWidget(self.nameLabel, 0, Qt.AlignHCenter)
+        # self.vBoxLayout.addWidget(self.nameLabel, 0, Qt.AlignHCenter)
 
-        text = self.nameLabel.fontMetrics().elidedText(icon.value, Qt.ElideRight, 78)
-        self.nameLabel.setText(text)
+        maintext = self.mainNameLabel.fontMetrics().elidedText(prompt["title"], Qt.ElideLeft, 78)
+        subtext = self.mainNameLabel.fontMetrics().elidedText(prompt["explanation"], Qt.ElideLeft, 150)#对一个过长的字符串进行裁剪，以便它能在给定的宽度内显示。
+        self.mainNameLabel.setText(maintext)
+        # self.subNameLabel.setText(subtext)
 
     def mouseReleaseEvent(self, e):
         if self.isSelected:
@@ -76,14 +79,15 @@ class IconCard(QFrame):
 class IconInfoPanel(QFrame):
     """ Icon info panel """
 
-    def __init__(self, icon: FluentIcon, parent=None):
+    def __init__(self, icon: FluentIcon, prompt,parent=None):
         super().__init__(parent=parent)
+        self.prompt=prompt
         self.nameLabel = QLabel(icon.value, self)
         self.iconWidget = IconWidget(icon, self)
         self.iconNameTitleLabel = QLabel(self.tr('详细介绍'), self)
         self.iconNameLabel = QLabel(icon.value, self)
         self.enumNameTitleLabel = QLabel(self.tr('prompt正文'), self)
-        self.enumNameLabel = QLabel("FluentIcon." + icon.name, self)
+        self.enumNameLabel = QLabel("abc" + icon.name, self)
 
         self.vBoxLayout = QVBoxLayout(self)
         self.vBoxLayout.setContentsMargins(16, 20, 16, 20)
@@ -108,12 +112,15 @@ class IconInfoPanel(QFrame):
         self.nameLabel.setObjectName('nameLabel')
         self.iconNameTitleLabel.setObjectName('subTitleLabel')
         self.enumNameTitleLabel.setObjectName('subTitleLabel')
+        
+        
 
-    def setIcon(self, icon: FluentIcon):
+    def setIcon(self, icon: FluentIcon,prompt=None):     
         self.iconWidget.setIcon(icon)
-        self.nameLabel.setText(icon.value)
-        self.iconNameLabel.setText(icon.value)
-        self.enumNameLabel.setText("FluentIcon."+icon.name)
+        self.nameLabel.setText(prompt["title"])
+        self.iconNameLabel.setText(prompt["explanation"])
+        self.enumNameLabel.setText(prompt["exactinfo"])
+        self.prompt=prompt
 
 
 class IconCardView(QWidget):
@@ -130,12 +137,13 @@ class IconCardView(QWidget):
         self.scrollWidget = QWidget(self.scrollArea)
         self.infoPanel = IconInfoPanel(FluentIcon.MENU, self)
 
-        self.vBoxLayout = QVBoxLayout(self)
-        self.hBoxLayout = QHBoxLayout(self.view)
+        self.vBoxLayout = QVBoxLayout(self)#搜索栏
+        self.hBoxLayout = QHBoxLayout(self.view)#右侧面板
         self.flowLayout = FlowLayout(self.scrollWidget, isTight=True)
 
-        self.cards = []     # type:List[IconCard]
+        self.cards = []     # type:List[PromptCard]
         self.icons = []
+        self.myExtraInfos = []
         self.currentIndex = -1
 
         self.__initWidget()
@@ -166,21 +174,42 @@ class IconCardView(QWidget):
         self.searchLineEdit.clearSignal.connect(self.showAllIcons)
         self.searchLineEdit.searchSignal.connect(self.search)
 
-        for icon in FluentIcon._member_map_.values():
-            self.addIcon(icon)
+        # 打开并读取JSON文件
+        with open('C:/Users/ZhangXuanye/source/repos/WenXinPrompt/gallery/app/resource/prompts.json', 'r') as f:
+            data = json.load(f)
 
+        # 获取prompts列表
+        prompts = data['prompts']
+        for prompt in prompts:
+            self.addPrompt(prompt)
+        self.showAllIcons()
         self.setSelectedIcon(self.icons[0])
 
-    def addIcon(self, icon: FluentIcon):
+    def addPrompt(self,prompt):
         """ add icon to view """
-        card = IconCard(icon, self)
+        icon=FluentIcon(prompt["icon"])
+        card = PromptCard(icon, self,prompt)
         card.clicked.connect(self.setSelectedIcon)
 
-        self.trie.insert(icon.value, len(self.cards))
+        # self.trie.insert(icon.value, len(self.cards))
+        self.trie.insert(prompt["title"].lower(), len(self.cards))
         self.cards.append(card)
         self.icons.append(icon)
+        self.myExtraInfos.append(prompt)
         self.flowLayout.addWidget(card)
 
+    # def setSelectedIcon(self, prompt):
+    #     """ set selected icon """
+    #     try:
+    #         index = next(i for i, d in enumerate(self.textinfos) if d["title"] == prompt)
+    #     except StopIteration:
+    #         return
+    #     if self.currentIndex >= 0:
+    #         self.cards[self.currentIndex].setSelected(False)
+
+    #     self.currentIndex = index
+    #     self.textinfos[index].setSelected(True)
+    #     self.infoPanel.setIcon(self.icons[index],prompt=self.textinfos[index])
     def setSelectedIcon(self, icon: FluentIcon):
         """ set selected icon """
         index = self.icons.index(icon)
@@ -190,8 +219,8 @@ class IconCardView(QWidget):
 
         self.currentIndex = index
         self.cards[index].setSelected(True)
-        self.infoPanel.setIcon(icon)
-
+        self.infoPanel.setIcon(icon,prompt=self.myExtraInfos[index])
+        
     def __setQss(self):
         self.view.setObjectName('iconView')
         self.scrollWidget.setObjectName('scrollWidget')
@@ -201,6 +230,18 @@ class IconCardView(QWidget):
 
         if self.currentIndex >= 0:
             self.cards[self.currentIndex].setSelected(True, True)
+
+    # def search(self, keyWord: str):
+    #     """ search icons """
+    #     items = self.trie.items(keyWord.lower())
+    #     indexes = {i[1] for i in items}
+    #     self.flowLayout.removeAllWidgets()
+
+    #     for i, card in enumerate(self.cards):
+    #         isVisible = i in indexes
+    #         card.setVisible(isVisible)
+    #         if isVisible:
+    #             self.flowLayout.addWidget(card)
 
     def search(self, keyWord: str):
         """ search icons """

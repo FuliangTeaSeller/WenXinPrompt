@@ -17,7 +17,7 @@ class LineEdit(SearchLineEdit):
         self.setFixedWidth(304)
         self.textChanged.connect(self.search)
 
-class myInterface(GalleryInterface):
+class editPromptInterface(GalleryInterface):
     def __init__(self, parent=None):
         t = Translator()
         super().__init__(
