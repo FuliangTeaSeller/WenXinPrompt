@@ -103,39 +103,39 @@ class SettingInterface(ScrollArea):
         )
 
         # update software
-        self.updateSoftwareGroup = SettingCardGroup(
-            self.tr("Software update"), self.scrollWidget)
-        self.updateOnStartUpCard = SwitchSettingCard(
-            FIF.UPDATE,
-            self.tr('Check for updates when the application starts'),
-            self.tr('The new version will be more stable and have more features'),
-            configItem=cfg.checkUpdateAtStartUp,
-            parent=self.updateSoftwareGroup
-        )
+        # self.updateSoftwareGroup = SettingCardGroup(
+        #     self.tr("Software update"), self.scrollWidget)
+        # self.updateOnStartUpCard = SwitchSettingCard(
+        #     FIF.UPDATE,
+        #     self.tr('Check for updates when the application starts'),
+        #     self.tr('The new version will be more stable and have more features'),
+        #     configItem=cfg.checkUpdateAtStartUp,
+        #     parent=self.updateSoftwareGroup
+        # )
 
         # application
         self.aboutGroup = SettingCardGroup(self.tr('About'), self.scrollWidget)
-        self.helpCard = HyperlinkCard(
-            HELP_URL,
-            self.tr('Open help page'),
-            FIF.HELP,
-            self.tr('Help'),
-            self.tr(
-                'Discover new features and learn useful tips about PyQt-Fluent-Widgets'),
-            self.aboutGroup
-        )
+        # self.helpCard = HyperlinkCard(
+        #     HELP_URL,
+        #     self.tr('Open help page'),
+        #     FIF.HELP,
+        #     self.tr('Help'),
+        #     self.tr(
+        #         'Discover new features and learn useful tips about PyQt-Fluent-Widgets'),
+        #     self.aboutGroup
+        # )
         self.feedbackCard = PrimaryPushSettingCard(
             self.tr('Provide feedback'),
             FIF.FEEDBACK,
             self.tr('Provide feedback'),
-            self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback'),
+            self.tr('通过提供反馈帮助我们改进'),
             self.aboutGroup
         )
         self.aboutCard = PrimaryPushSettingCard(
-            self.tr('Check update'),
+            self.tr('进入Github主页'),
             FIF.INFO,
             self.tr('About'),
-            '© ' + self.tr('Copyright') + f" {YEAR}, {AUTHOR}. " +
+             f" {YEAR}, {AUTHOR}. " +
             self.tr('Version') + " " + VERSION,
             self.aboutGroup
         )
@@ -172,9 +172,9 @@ class SettingInterface(ScrollArea):
 
         self.materialGroup.addSettingCard(self.blurRadiusCard)
 
-        self.updateSoftwareGroup.addSettingCard(self.updateOnStartUpCard)
+        # self.updateSoftwareGroup.addSettingCard(self.updateOnStartUpCard)
 
-        self.aboutGroup.addSettingCard(self.helpCard)
+        # self.aboutGroup.addSettingCard(self.helpCard)
         self.aboutGroup.addSettingCard(self.feedbackCard)
         self.aboutGroup.addSettingCard(self.aboutCard)
 
@@ -184,7 +184,7 @@ class SettingInterface(ScrollArea):
         self.expandLayout.addWidget(self.musicInThisPCGroup)
         self.expandLayout.addWidget(self.personalGroup)
         self.expandLayout.addWidget(self.materialGroup)
-        self.expandLayout.addWidget(self.updateSoftwareGroup)
+        # self.expandLayout.addWidget(self.updateSoftwareGroup)
         self.expandLayout.addWidget(self.aboutGroup)
 
     def __showRestartTooltip(self):

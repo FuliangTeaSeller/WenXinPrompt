@@ -2,9 +2,9 @@
 from typing import List
 
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal,QTimer
 from PyQt5.QtWidgets import QApplication, QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout
-from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme,
+from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme,PushButton,
                             Theme, applyThemeColor, SmoothScrollArea, SearchLineEdit)
 
 from .gallery_interface import GalleryInterface
@@ -13,7 +13,25 @@ from ..common.config import cfg
 from ..common.style_sheet import StyleSheet
 from ..common.trie import Trie
 import json
+def splitText(text: str, maxLineLength: int) -> str:
+        words = text.split(' ')
+        lines = []
+        currentLine = []
+        currentLength = 0
 
+        for word in words:
+            if currentLength + len(word) > maxLineLength and currentLine:
+                lines.append(' '.join(currentLine))
+                currentLine = []
+                currentLength = 0
+
+            currentLine.append(word)
+            currentLength += len(word) + 1  # "+ 1" is for the space
+
+        if currentLine:  # Add the last line if it's not empty
+            lines.append(' '.join(currentLine))
+
+        return '\n'.join(lines)
 class LineEdit(SearchLineEdit):
     """ Search line edit """
 
@@ -100,6 +118,9 @@ class IconInfoPanel(QFrame):
         self.enumNameTitleLabel = QLabel(self.tr('prompt正文'), self)
         self.enumNameLabel = QLabel("abc" + icon.name, self)
 
+        self.copyButton=PushButton(self.tr('复制'))
+        self.copyButton.clicked.connect(self.copyTextToClipboard)
+
         self.vBoxLayout = QVBoxLayout(self)
         self.vBoxLayout.setContentsMargins(16, 20, 16, 20)
         self.vBoxLayout.setSpacing(0)
@@ -108,14 +129,17 @@ class IconInfoPanel(QFrame):
         self.vBoxLayout.addWidget(self.nameLabel)
         self.vBoxLayout.addSpacing(16)
         self.vBoxLayout.addWidget(self.iconWidget)
-        self.vBoxLayout.addSpacing(45)
+        self.vBoxLayout.addSpacing(15)
         self.vBoxLayout.addWidget(self.iconNameTitleLabel)
         self.vBoxLayout.addSpacing(5)
         self.vBoxLayout.addWidget(self.iconNameLabel)
-        self.vBoxLayout.addSpacing(34)
+        self.vBoxLayout.addSpacing(20)
         self.vBoxLayout.addWidget(self.enumNameTitleLabel)
         self.vBoxLayout.addSpacing(5)
         self.vBoxLayout.addWidget(self.enumNameLabel)
+        self.vBoxLayout.addStretch()
+        self.vBoxLayout.addWidget(self.copyButton)
+        
 
         self.iconWidget.setFixedSize(0, 0)
         self.setFixedWidth(216)
@@ -123,17 +147,30 @@ class IconInfoPanel(QFrame):
         self.nameLabel.setObjectName('nameLabel')
         self.iconNameTitleLabel.setObjectName('subTitleLabel')
         self.enumNameTitleLabel.setObjectName('subTitleLabel')
-        
-        
+    
 
+        
+    # def setIcon(self, icon: FluentIcon,prompt=None):     
+    #     self.iconWidget.setIcon(icon)
+    #     self.nameLabel.setText(prompt["title"])
+    #     self.iconNameLabel.setText(prompt["explanation"])
+    #     self.enumNameLabel.setText(prompt["exactinfo"])
+    #     self.prompt=prompt
+    
+    
+    
     def setIcon(self, icon: FluentIcon,prompt=None):     
         self.iconWidget.setIcon(icon)
-        self.nameLabel.setText(prompt["title"])
-        self.iconNameLabel.setText(prompt["explanation"])
-        self.enumNameLabel.setText(prompt["exactinfo"])
+        self.nameLabel.setText(splitText(prompt["title"], 20))
+        self.iconNameLabel.setText(splitText(prompt["explanation"], 30))  # Use splitText function here
+        self.enumNameLabel.setText(splitText(prompt["exactinfo"], 30))  # And here
         self.prompt=prompt
 
-
+    def copyTextToClipboard(self):
+        clipboard = QApplication.clipboard()  # 获取剪贴板实例
+        clipboard.setText(self.prompt["exactinfo"])  # 将 exactinfo 文本设置到剪贴板中
+        
+    
 class IconCardView(QWidget):
     """ Icon card view """
 
@@ -151,6 +188,7 @@ class IconCardView(QWidget):
         self.vBoxLayout = QVBoxLayout(self)#搜索栏
         self.hBoxLayout = QHBoxLayout(self.view)#右侧面板
         self.flowLayout = FlowLayout(self.scrollWidget, isTight=True)
+        self.cvLayout=QHBoxLayout(self)
 
         self.cards = []     # type:List[PromptCard]
         self.icons = []
@@ -179,14 +217,16 @@ class IconCardView(QWidget):
         self.flowLayout.setVerticalSpacing(8)
         self.flowLayout.setHorizontalSpacing(8)
         self.flowLayout.setContentsMargins(8, 3, 8, 8)
+    
+        # self.cvLayout.addWidget(self.copyButton)
 
         self.__setQss()
         cfg.themeChanged.connect(self.__setQss)
         self.searchLineEdit.clearSignal.connect(self.showAllIcons)
         self.searchLineEdit.searchSignal.connect(self.search)
-
+        
         # 打开并读取JSON文件
-        with open('../gallery/app/resource/prompts.json', 'r') as f:
+        with open('./gallery/app/resource/prompts.json', 'r') as f:
             data = json.load(f)
 
         # 获取prompts列表
@@ -195,6 +235,10 @@ class IconCardView(QWidget):
             self.addPrompt(prompt)
         self.showAllIcons()
         self.setSelectedIcon(self.icons[0])
+        self.searchLineEdit.setText("Prompt Here")
+        for card in self.cards:
+            card.hide()
+            
 
     def addPrompt(self,prompt):
         """ add icon to view """
@@ -202,25 +246,12 @@ class IconCardView(QWidget):
         card = PromptCard(icon, self,prompt)
         card.clicked.connect(self.setSelectedIcon)
 
-        # self.trie.insert(icon.value, len(self.cards))
-        self.trie.insert(prompt["title"].lower(), len(self.cards))
         self.cards.append(card)
         self.icons.append(icon)
         self.myExtraInfos.append(prompt)
-        self.flowLayout.addWidget(card)
+        # self.flowLayout.addWidget(card)
+        
 
-    # def setSelectedIcon(self, prompt):
-    #     """ set selected icon """
-    #     try:
-    #         index = next(i for i, d in enumerate(self.textinfos) if d["title"] == prompt)
-    #     except StopIteration:
-    #         return
-    #     if self.currentIndex >= 0:
-    #         self.cards[self.currentIndex].setSelected(False)
-
-    #     self.currentIndex = index
-    #     self.textinfos[index].setSelected(True)
-    #     self.infoPanel.setIcon(self.icons[index],prompt=self.textinfos[index])
     def setSelectedIcon(self, icon: FluentIcon):
         """ set selected icon """
         index = self.icons.index(icon)
@@ -241,51 +272,36 @@ class IconCardView(QWidget):
 
         if self.currentIndex >= 0:
             self.cards[self.currentIndex].setSelected(True, True)
-
-    # def search(self, keyWord: str):
-    #     """ search icons """
-    #     items = self.trie.items(keyWord.lower())
-    #     indexes = {i[1] for i in items}
-    #     self.flowLayout.removeAllWidgets()
-
-    #     for i, card in enumerate(self.cards):
-    #         isVisible = i in indexes
-    #         card.setVisible(isVisible)
-    #         if isVisible:
-    #             self.flowLayout.addWidget(card)
-
-    # def search(self, keyWord: str):
-    #     """ search icons """
-    #     items = self.trie.items(keyWord.lower())
-    #     print(items)
-    #     indexes = {i[1] for i in items}
-    #     self.flowLayout.removeAllWidgets()
-
-    #     for i, card in enumerate(self.cards):
-    #         isVisible = i in indexes
-    #         card.setVisible(isVisible)
-    #         if isVisible:
-    #             self.flowLayout.addWidget(card)
                 
     def search(self, keyWord: str):
         """ search icons """
         keyWord = keyWord.lower()  # 将搜索词转为小写
-
+        # if(keyWord==""):
+        #     self.showAllIcons()
+        #     return
         self.flowLayout.removeAllWidgets()  # 移除FlowLayout中的所有部件
-
+        self.flowLayout.update()  # 更新FlowLayout
         for card in self.cards:  
             # 假设card对象有一个name属性代表图标的名字，如果没有，应该替换为合适的属性
             isVisible = keyWord in card.prompt['title'].lower() 
             card.setVisible(isVisible)
             if isVisible:
                 self.flowLayout.addWidget(card)
+                self.flowLayout.update()
 
                 
     def showAllIcons(self):
         self.flowLayout.removeAllWidgets()
+        self.flowLayout.update()
         for card in self.cards:
-            card.show()
             self.flowLayout.addWidget(card)
+            self.flowLayout.update()
+            card.show()
+            self.flowLayout.update()
+            # size = self.size()       
+            # self.resize(size.width() + 1, size.height())  # 少量改变窗口大小
+            # self.resize(size)  # 立即将其改回  
+          
 
 
 class IconInterface(GalleryInterface):

@@ -1,34 +1,94 @@
 {
     "prompts": [
         {
-            "title": "Prompt1",
-            "explanation": "Explanation for prompt 1",
-            "exactinfo": "Exact info for prompt 1",
+            "title": "Prompt 1Prompt 1Prompt 1Prompt 1Prompt 1",
+            "explanation": "This is the explanation for prompt 1This is the explanation for prompt 1This is the explanation for prompt 1This is the explanation for prompt 1This is the explanation for prompt 1",
+            "exactinfo": "Exact info for prompt 1Exact info for prompt 1Exact info for prompt 1Exact info for prompt 1Exact info for prompt 1",
             "icon": "Add"
         },
         {
             "title": "Prompt 2",
-            "explanation": "Explanation for prompt 2",
+            "explanation": "This is the explanation for prompt 2",
             "exactinfo": "Exact info for prompt 2",
             "icon": "Cut"
         },
         {
             "title": "Prompt 3",
-            "explanation": "Explanation for prompt 3",
+            "explanation": "This is the explanation for prompt 3",
             "exactinfo": "Exact info for prompt 3",
             "icon": "Pin"
         },
         {
             "title": "Prompt 4",
-            "explanation": "Explanation for prompt 4",
+            "explanation": "This is the explanation for prompt 4",
             "exactinfo": "Exact info for prompt 4",
             "icon": "Tag"
         },
         {
             "title": "Prompt 5",
-            "explanation": "Explanation for prompt 5",
+            "explanation": "This is the explanation for prompt 5",
             "exactinfo": "Exact info for prompt 5",
             "icon": "Chat"
+        },
+        {
+            "title": "Prompt 6",
+            "explanation": "This is the explanation for prompt 6",
+            "exactinfo": "Exact info for prompt 6",
+            "icon": "Copy"
+        },
+        {
+            "title": "Prompt 7",
+            "explanation": "This is the explanation for prompt 7",
+            "exactinfo": "Exact info for prompt 7",
+            "icon": "Code"
+        },
+        {
+            "title": "Prompt 8",
+            "explanation": "This is the explanation for prompt 8",
+            "exactinfo": "Exact info for prompt 8",
+            "icon": "Edit"
+        },
+        {
+            "title": "Prompt 9",
+            "explanation": "This is the explanation for prompt 9",
+            "exactinfo": "Exact info for prompt 9",
+            "icon": "Font"
+        },
+        {
+            "title": "Prompt 10",
+            "explanation": "This is the explanation for prompt 10",
+            "exactinfo": "Exact info for prompt 10",
+            "icon": "Help"
+        },
+        {
+            "title": "Prompt 11",
+            "explanation": "This is the explanation for prompt 11",
+            "exactinfo": "Exact info for prompt 11",
+            "icon": "Hide"
+        },
+        {
+            "title": "Prompt 12",
+            "explanation": "This is the explanation for prompt 12",
+            "exactinfo": "Exact info for prompt 12",
+            "icon": "Home"
+        },
+        {
+            "title": "Prompt 13",
+            "explanation": "This is the explanation for prompt 13",
+            "exactinfo": "Exact info for prompt 13",
+            "icon": "Info"
+        },
+        {
+            "title": "Prompt 14",
+            "explanation": "This is the explanation for prompt 14",
+            "exactinfo": "Exact info for prompt 14",
+            "icon": "Link"
+        },
+        {
+            "title": "Prompt 15",
+            "explanation": "This is the explanation for prompt 15",
+            "exactinfo": "Exact info for prompt 15",
+            "icon": "Mail"
         }
     ]
 }
