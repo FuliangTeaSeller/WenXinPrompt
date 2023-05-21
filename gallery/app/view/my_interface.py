@@ -1,7 +1,7 @@
 # coding:utf-8
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup,QLabel
-from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme,
+from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme, PushButton,
                             Theme, applyThemeColor, SmoothScrollArea, SearchLineEdit)
 from qfluentwidgets import LineEdit
 from .gallery_interface import GalleryInterface
@@ -34,6 +34,8 @@ class editPromptInterface(GalleryInterface):
         #self.searchLineEdit = LineEdit1(self)
         self.input = LineEdit2(self)
         self.input.setText(self.tr('n m s l！'))
+        self.button = PushButton(self.tr('create'))
+        self.button.setFixedWidth(100)
         self.input.setClearButtonEnabled(True)
         self.vBoxLayout = QVBoxLayout(self.view)
         self.__initWidget()
@@ -43,8 +45,9 @@ class editPromptInterface(GalleryInterface):
         self.setWidget(self.view)
         self.setWidgetResizable(True)
 
-        self.vBoxLayout.setContentsMargins(0, 0, 0, 36)
-        self.vBoxLayout.setSpacing(10)
+        self.vBoxLayout.setSpacing(30)
+        self.vBoxLayout.setAlignment(Qt.AlignTop)
+        self.vBoxLayout.setContentsMargins(36, 20, 36, 36)
         self.vBoxLayout.addWidget(self.iconLibraryLabel)
         self.vBoxLayout.addWidget(self.input)
-        self.vBoxLayout.setAlignment(Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.button)

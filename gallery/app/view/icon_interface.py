@@ -186,7 +186,7 @@ class IconCardView(QWidget):
         self.searchLineEdit.searchSignal.connect(self.search)
 
         # 打开并读取JSON文件
-        with open('./gallery/app/resource/prompts.json', 'r') as f:
+        with open('../gallery/app/resource/prompts.json', 'r') as f:
             data = json.load(f)
 
         # 获取prompts列表
