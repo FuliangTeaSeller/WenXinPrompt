@@ -1,6 +1,6 @@
 # coding:utf-8
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup,QLabel
+from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup,QLabel, QFrame, QHBoxLayout
 from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme, PushButton,
                             Theme, applyThemeColor, SmoothScrollArea, SearchLineEdit)
 from qfluentwidgets import LineEdit
@@ -30,13 +30,8 @@ class editPromptInterface(GalleryInterface):
         )
         self.trie = Trie()
         self.view = QWidget(self)
-        self.iconLibraryLabel = QLabel(self.tr('Prompt库'), self)
-        #self.searchLineEdit = LineEdit1(self)
-        self.input = LineEdit2(self)
-        self.input.setText(self.tr('n m s l！'))
         self.button = PushButton(self.tr('create'))
         self.button.setFixedWidth(100)
-        self.input.setClearButtonEnabled(True)
         self.vBoxLayout = QVBoxLayout(self.view)
         self.__initWidget()
     def __initWidget(self):
@@ -44,10 +39,36 @@ class editPromptInterface(GalleryInterface):
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setWidget(self.view)
         self.setWidgetResizable(True)
-
         self.vBoxLayout.setSpacing(30)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
         self.vBoxLayout.setContentsMargins(36, 20, 36, 36)
-        self.vBoxLayout.addWidget(self.iconLibraryLabel)
-        self.vBoxLayout.addWidget(self.input)
+        self.addPropmtCard("Title", 100, 50)
+        self.addPropmtCard("Explanation", 200, 100)
+        self.addPropmtCard("Exactinfo", 200, 200)
         self.vBoxLayout.addWidget(self.button)
+
+    def addPropmtCard(self, title, width, height):
+        card = CreatepromptCard(title, width, height)
+        self.vBoxLayout.addWidget(card, 0, Qt.AlignTop)
+        return card
+
+#创建一个card，包括一个label和一个lineedit
+class CreatepromptCard(QFrame):
+    def __init__(self, title='Title', width=100, height=50):
+        super().__init__()
+        self.label = QLabel(title, self)
+        self.label.setFixedWidth(80)
+        self.lineedit = LineEdit2()
+        self.lineedit.setText('n m s l')
+        self.lineedit.setFixedWidth(width)
+        self.lineedit.setFixedHeight(height)
+        self.lineedit.setClearButtonEnabled(True)
+        self.hBoxLayout = QHBoxLayout(self)
+        self.hBoxLayout.addWidget(self.label)
+        self.hBoxLayout.addWidget(self.lineedit)
+        self.hBoxLayout.setSpacing(10)
+        self.hBoxLayout.setContentsMargins(0,0,0,0)
+        self.hBoxLayout.setAlignment(Qt.AlignLeft)
+
+
+
