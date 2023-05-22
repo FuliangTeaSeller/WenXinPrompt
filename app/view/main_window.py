@@ -12,18 +12,8 @@ from qframelesswindow import FramelessWindow
 from .title_bar import CustomTitleBar
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
-from .basic_input_interface import BasicInputInterface
-from .date_time_interface import DateTimeInterface
-from .dialog_interface import DialogInterface
-from .layout_interface import LayoutInterface
 from .icon_interface import IconInterface
-from .material_interface import MaterialInterface
-from .menu_interface import MenuInterface
-from .scroll_interface import ScrollInterface
-from .status_info_interface import StatusInfoInterface
 from .setting_interface import SettingInterface, cfg
-from .text_interface import TextInterface
-from .view_interface import ViewInterface
 
 from .my_interface import editPromptInterface
 
@@ -81,18 +71,7 @@ class MainWindow(FramelessWindow):
         # create sub interface
         self.homeInterface = HomeInterface(self)
         self.iconInterface = IconInterface(self)
-        # self.basicInputInterface = BasicInputInterface(self)
-        # self.dateTimeInterface = DateTimeInterface(self)
-        # self.dialogInterface = DialogInterface(self)
-        # self.layoutInterface = LayoutInterface(self)
-        # self.menuInterface = MenuInterface(self)
-        # self.materialInterface = MaterialInterface(self)
-        # self.scrollInterface = ScrollInterface(self)
-        # self.statusInfoInterface = StatusInfoInterface(self)
         self.settingInterface = SettingInterface(self)
-        # self.textInterface = TextInterface(self)
-        # self.viewInterface = ViewInterface(self)
-        
         self.myInterface = editPromptInterface(self)
 
         # initialize layout
@@ -128,37 +107,10 @@ class MainWindow(FramelessWindow):
             self.iconInterface, 'iconInterface', Icon.EMOJI_TAB_SYMBOLS, self.tr('Icons'), NavigationItemPosition.TOP)
         self.navigationInterface.addSeparator()
 
-        # self.addSubInterface(
-        #     self.basicInputInterface, 'basicInputInterface', FIF.CHECKBOX, self.tr('Basic input'))
-        # self.addSubInterface(
-        #     self.dateTimeInterface, 'dateTimeInterface', FIF.DATE_TIME, self.tr('Date & time'))
-        # self.addSubInterface(
-        #     self.dialogInterface, 'dialogInterface', FIF.MESSAGE, self.tr('Dialogs'))
-        # self.addSubInterface(
-        #     self.layoutInterface, 'layoutInterface', FIF.LAYOUT, self.tr('Layout'))
-        # self.addSubInterface(
-        #     self.materialInterface, 'materialInterface', FIF.PALETTE, self.tr('Material'))
-        # self.addSubInterface(
-        #     self.menuInterface, 'menuInterface', Icon.MENU, self.tr('Menus'))
-        # self.addSubInterface(
-        #     self.scrollInterface, 'scrollInterface', FIF.SCROLL, self.tr('Scrolling'))
-        # self.addSubInterface(
-        #     self.statusInfoInterface, 'statusInfoInterface', FIF.CHAT, self.tr('Status & info'))
-        # self.addSubInterface(
-        #     self.textInterface, 'textInterface', Icon.TEXT, self.tr('Text'))
-        # self.addSubInterface(
-        #     self.viewInterface, 'viewInterface', Icon.GRID, self.tr('View'))
         
         self.addSubInterface(
             self.myInterface, 'myInterface', Icon.GRID, self.tr('my'))
 
-        # add custom widget to bottom
-        # self.navigationInterface.addWidget(
-        #     routeKey='avatar',
-        #     widget=AvatarWidget(':/gallery/images/shoko.png'),
-        #     onClick=self.showMessageBox,
-        #     position=NavigationItemPosition.BOTTOM
-        # )
         self.addSubInterface(
             self.settingInterface, 'settingInterface', FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
 
