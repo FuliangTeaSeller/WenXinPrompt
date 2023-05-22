@@ -73,7 +73,7 @@ class PromptCard(QFrame):
         font = QFont()
         font.setFamily('Arial')
         font.setPointSize(14)
-        font.setBold(True)
+        # font.setBold(True)
         self.mainNameLabel.setStyleSheet('color: grey;')
         self.mainNameLabel.setText(maintext)
         self.mainNameLabel.setFont(font)
@@ -95,10 +95,10 @@ class PromptCard(QFrame):
 
         if not isSelected:
             # self.iconWidget.setIcon(self.icon)
-            self.mainNameLabel.setStyleSheet('color: grey;')
+            self.mainNameLabel.setStyleSheet('color: grey;font-weight: normal;')
         else:
             # icon = self.icon.icon(Theme.LIGHT if isDarkTheme() else Theme.DARK)
-            self.mainNameLabel.setStyleSheet('color: rgb(0, 159, 170);')
+            self.mainNameLabel.setStyleSheet('color: rgb(0, 159, 170);font-weight: bold;')
             # self.iconWidget.setIcon(icon)
 
         self.setProperty('isSelected', isSelected)
