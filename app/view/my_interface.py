@@ -27,7 +27,7 @@ class editPromptInterface(GalleryInterface):
         t = Translator()
         super().__init__(
             title=t.my,
-            subtitle='114514',
+            subtitle='',
             parent=parent
         )
         self.trie = Trie()
@@ -66,7 +66,7 @@ class editPromptInterface(GalleryInterface):
                 card_dict[key] = value  # Add key-value pair to the same dictionary
         data["prompts"].append(card_dict)  # Add the prompt dictionary to "prompts" after the loop ends
         # Ensure the directory exists
-        directory = "../gallery/app/resource"
+        directory = "./app/resource/prompts"
         if not os.path.exists(directory):
             os.makedirs(directory)
         # Get the "Title" field from the data

@@ -109,7 +109,7 @@ class MainWindow(FramelessWindow):
 
         
         self.addSubInterface(
-            self.myInterface, 'myInterface', Icon.GRID, self.tr('my'))
+            self.myInterface, 'myInterface', FIF.ADD, self.tr('my'))
 
         self.addSubInterface(
             self.settingInterface, 'settingInterface', FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)

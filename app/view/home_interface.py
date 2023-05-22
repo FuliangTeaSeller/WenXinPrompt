@@ -4,7 +4,7 @@ from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 
 from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon
-from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
+from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, THANK_URL
 from ..common.icon import Icon, FluentIconBase
 from ..components.link_card import LinkCardView
 from ..components.sample_card import SampleCardView
@@ -18,7 +18,7 @@ class BannerWidget(QWidget):
         super().__init__(parent=parent)
         self.setFixedHeight(336)
         self.vBoxLayout = QVBoxLayout(self)
-        self.galleryLabel = QLabel('WenXinPrompt-一站式prompt解决方案', self)
+        self.galleryLabel = QLabel('WenXinPrompt-一站式Prompt解决方案', self)
         self.banner = QPixmap(':/gallery/images/header1.png')
         self.linkCardView = LinkCardView(self)
 
@@ -32,32 +32,32 @@ class BannerWidget(QWidget):
 
         self.linkCardView.addCard(
             ':/gallery/images/logo.png',
-            self.tr('快速开始'),
-            self.tr('立即进入prompt创作'),
+            self.tr('快速搜索'),
+            self.tr('立即进入Prompt仓库'),
             url=None,routeKey='iconInterface'
+        )
+
+        self.linkCardView.addCard(
+            FluentIcon.CODE,
+            self.tr('新建Prompt'),
+            self.tr(
+                '进入Prompt新建页面'),
+             url=None,routeKey='myInterface'
         )
 
         self.linkCardView.addCard(
             FluentIcon.GITHUB,
             self.tr('GitHub 仓库'),
             self.tr(
-                '该项目的GitHub 仓库地址'),
+                '该项目的GitHub 地址'),
             REPO_URL
         )
-
-        self.linkCardView.addCard(
-            FluentIcon.CODE,
-            self.tr('Code samples'),
-            self.tr(
-                'Find samples that demonstrate specific tasks, features and APIs.'),
-            EXAMPLE_URL
-        )
-
+        
         self.linkCardView.addCard(
             FluentIcon.FEEDBACK,
-            self.tr('Send feedback'),
-            self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
-            FEEDBACK_URL
+            self.tr('特别致谢'),
+            self.tr('本项目基于项目PyQt Fluent Widgets 进行开发'),
+            THANK_URL
         )
 
     def paintEvent(self, e):
@@ -118,7 +118,7 @@ class HomeInterface(ScrollArea):
         """ load samples """
         
         # view samples
-        collectionView = SampleCardView(self.tr('View samples'), self.view)
+        collectionView = SampleCardView(self.tr('本项目的主要功能'), self.view)
         collectionView.addSampleCard(
             icon=":/gallery/images/controls/ListView.png",
             title="ListView",
@@ -146,14 +146,14 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.addWidget(collectionView)
         
         #my samples
-        myView = SampleCardView(self.tr('My samples'), self.view)
-        myView.addSampleCard(
-            icon=":/gallery/images/controls/ListView.png",
-            title="MyView1",
-            content=self.tr(
-                "描述文本"),
-            routeKey="MyInterface",
-            index=0
-        )
-        self.vBoxLayout.addWidget(myView)
+        # myView = SampleCardView(self.tr('My samples'), self.view)
+        # myView.addSampleCard(
+        #     icon=":/gallery/images/controls/ListView.png",
+        #     title="MyView1",
+        #     content=self.tr(
+        #         "描述文本"),
+        #     routeKey="MyInterface",
+        #     index=0
+        # )
+        # self.vBoxLayout.addWidget(myView)
         

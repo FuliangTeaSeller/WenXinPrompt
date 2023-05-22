@@ -111,12 +111,12 @@ class IconInfoPanel(QFrame):
     def __init__(self, icon: FluentIcon, prompt,parent=None):
         super().__init__(parent=parent)
         self.prompt=prompt
-        self.nameLabel = QLabel(icon.value, self)
+        self.nameLabel = QLabel("Prompt", self)
         self.iconWidget = IconWidget(icon, self)
         self.iconNameTitleLabel = QLabel(self.tr('详细介绍'), self)
-        self.iconNameLabel = QLabel(icon.value, self)
-        self.enumNameTitleLabel = QLabel(self.tr('prompt正文'), self)
-        self.enumNameLabel = QLabel("abc" + icon.name, self)
+        self.iconNameLabel = QLabel("这里介绍Prompt的大致功能和用途", self)
+        self.enumNameTitleLabel = QLabel(self.tr('Prompt正文'), self)
+        self.enumNameLabel = QLabel("这里是实际的Prompt内容,\n点击复制按钮会复制到剪贴板" , self)
 
         self.copyButton=PushButton(self.tr('复制'))
         self.copyButton.clicked.connect(self.copyTextToClipboard)
@@ -226,7 +226,7 @@ class IconCardView(QWidget):
         self.searchLineEdit.searchSignal.connect(self.search)
         
         # 打开并读取JSON文件
-        with open('./app/resource/prompts.json', 'r') as f:
+        with open('./app/resource/prompts/default/prompts.json', 'r') as f:
             data = json.load(f)
 
         # 获取prompts列表
@@ -234,7 +234,7 @@ class IconCardView(QWidget):
         for prompt in prompts:
             self.addPrompt(prompt)
         self.showAllIcons()
-        self.setSelectedIcon(self.icons[0])
+        # self.setSelectedIcon(self.icons[0])
         self.searchLineEdit.setText("Prompt Here")
         for card in self.cards:
             card.hide()

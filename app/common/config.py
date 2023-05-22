@@ -57,6 +57,7 @@ EXAMPLE_URL = "https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/master/exampl
 FEEDBACK_URL = "https://github.com/FuliangTeaSeller/WenXinPrompt/issues"
 RELEASE_URL = "https://github.com/FuliangTeaSeller/WenXinPrompt"
 SUPPORT_URL = "https://github.com/FuliangTeaSeller/WenXinPrompt"
+THANK_URL = "https://github.com/zhiyiYo/PyQt-Fluent-Widgets"
 
 
 cfg = Config()
