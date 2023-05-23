@@ -2,10 +2,10 @@
 from typing import List
 
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import Qt, pyqtSignal,QTimer
+from PyQt5.QtCore import Qt, pyqtSignal,QTimer,QSize
 from PyQt5.QtWidgets import QApplication, QFrame, QVBoxLayout, QLabel, QWidget, QHBoxLayout
 from qfluentwidgets import (FluentIcon, IconWidget, FlowLayout, isDarkTheme,PushButton,
-                            Theme, applyThemeColor, SmoothScrollArea, SearchLineEdit)
+                            Theme, applyThemeColor, SmoothScrollArea, SearchLineEdit,ToolButton)
 
 from .gallery_interface import GalleryInterface
 from ..common.translator import Translator
@@ -38,7 +38,7 @@ class LineEdit(SearchLineEdit):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setPlaceholderText(self.tr('Search prompts'))
-        self.setFixedWidth(304)
+        self.setFixedWidth(350)
         self.textChanged.connect(self.search)
 
 
@@ -179,6 +179,7 @@ class IconCardView(QWidget):
         self.trie = Trie()
         self.iconLibraryLabel = QLabel(self.tr('在本地prompt库中搜索'), self)
         self.searchLineEdit = LineEdit(self)
+        self.refreshButton = ToolButton(FluentIcon.SYNC)
 
         self.view = QFrame(self)
         self.scrollArea = SmoothScrollArea(self.view)
@@ -188,6 +189,7 @@ class IconCardView(QWidget):
         self.vBoxLayout = QVBoxLayout(self)#搜索栏
         self.hBoxLayout = QHBoxLayout(self.view)#右侧面板
         self.flowLayout = FlowLayout(self.scrollWidget, isTight=True)
+        self.myNewLayout=QHBoxLayout(self)
         self.cvLayout=QHBoxLayout(self)
 
         self.cards = []     # type:List[PromptCard]
@@ -202,11 +204,20 @@ class IconCardView(QWidget):
         self.scrollArea.setViewportMargins(0, 5, 0, 5)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-
+    
+        self.refreshButton.setIconSize(QSize(10, 10))
+        self.refreshButton.resize(20, 20)
+        
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.vBoxLayout.setSpacing(12)
         self.vBoxLayout.addWidget(self.iconLibraryLabel)
-        self.vBoxLayout.addWidget(self.searchLineEdit)
+        # self.vBoxLayout.addWidget(self.searchLineEdit)
+        
+        self.myNewLayout.addWidget(self.searchLineEdit, 0, Qt.AlignLeft)
+        self.myNewLayout.addWidget(self.refreshButton, 10, Qt.AlignLeft)
+        # self.vBoxLayout.addWidget(self.refreshButton)
+        
+        self.vBoxLayout.addLayout(self.myNewLayout)
         self.vBoxLayout.addWidget(self.view)
 
         self.hBoxLayout.setSpacing(0)
@@ -217,14 +228,14 @@ class IconCardView(QWidget):
         self.flowLayout.setVerticalSpacing(8)
         self.flowLayout.setHorizontalSpacing(8)
         self.flowLayout.setContentsMargins(8, 3, 8, 8)
-    
-        # self.cvLayout.addWidget(self.copyButton)
+
 
         self.__setQss()
         cfg.themeChanged.connect(self.__setQss)
         self.searchLineEdit.clearSignal.connect(self.showAllIcons)
         self.searchLineEdit.searchSignal.connect(self.search)
-        
+        self.refreshButton.clicked.connect(self.showAllIcons)
+        self.refreshButton.clicked.connect(self.searchLineEdit.clear)
         # 打开并读取JSON文件
         with open('./app/resource/prompts/default/prompts.json', 'r') as f:
             data = json.load(f)
@@ -235,9 +246,7 @@ class IconCardView(QWidget):
             self.addPrompt(prompt)
         self.showAllIcons()
         # self.setSelectedIcon(self.icons[0])
-        self.searchLineEdit.setText("Prompt Here")
-        for card in self.cards:
-            card.hide()
+        # self.searchLineEdit.setText("Prompt Here")
             
 
     def addPrompt(self,prompt):
